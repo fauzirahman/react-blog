@@ -1,32 +1,46 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, withRouter } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Welcome from './components/Welcome';
 import Footer from './components/Footer';
 import About from './components/About';
 import Contact from './components/Contact';
 import Post from './components/Post';
+import Login from './components/Admin/Login';
+import Signup from './components/Admin/Signup';
+import ForgotPassword from './components/Admin/ForgotPassword';
 
 import * as serviceWorker from './serviceWorker';
 
-const Home = () => {
-    return <h1 > This is Home Page </h1>
-};
+const Main = withRouter(() => {
+    return (
+        <div>    
+            {
+                location.pathname !== '/login' && location.pathname !== '/signup' &&
+                < Navbar />
+            }    
+            
+            <Route exact path="/" component={Welcome} />
+            <Route path="/about" component={About} />
+            <Route path="/contact" component={Contact} />
+            <Route path="/post" component={Post} />               
+            <Route path="/login" component={Login} />  
+            <Route path="/signup" component={Signup} />
+            <Route path="/forgot-password" component={ForgotPassword} />
+            {
+                location.pathname !== '/login' && location.pathname !== '/signup' &&
+               <Footer />
+            }                 
+        </div> 
+    )
+});
 
 
 
 ReactDOM.render(
     <BrowserRouter>
-    <div>        
-        <Navbar />
-        <Route exact path="/" component={Welcome} />
-        <Route path="/about" component={About} />
-        <Route path="/contact" component={Contact} />
-        <Route path="/post" component={Post} />
-        <Route path="/home" component={Home} />        
-        <Footer />
-    </div>        
+        <Main />
     </BrowserRouter>
     , document.getElementById('root'));
 

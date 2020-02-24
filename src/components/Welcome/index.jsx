@@ -7,8 +7,8 @@ const Welcome = () => {
         <div>            
             <Banner 
                 backgroundImage={`url(${process.env.PUBLIC_URL}assets/img/home-bg.jpg)`}
-                title = "Clean Blog"
-                subTitle = "A Blog Theme by Start Bootstrap"
+                title = "New React Blog"
+                subTitle = "Welcome to App"
             />
             <Article />
         </div>        

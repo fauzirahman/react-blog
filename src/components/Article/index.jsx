@@ -17,7 +17,7 @@ const Article = () => {
                                  </h3>
                             </a>
                             <p className="post-meta">Posted by
-                                <a href="#">Start Bootstrap</a>
+                                <a href="#">Welcome to App</a>
                                 on September 24, 2019
                             </p>
                         </div>
@@ -29,7 +29,7 @@ const Article = () => {
                                  </h2>
                             </a>
                             <p className="post-meta">Posted by
-                                <a href="#">Start Bootstrap</a>
+                                <a href="#">Welcome to App</a>
                                 on September 18, 2019
                             </p>
                         </div>
@@ -44,7 +44,7 @@ const Article = () => {
                                 </h3>
                             </a>
                             <p className="post-meta">Posted by
-                                <a href="#">Start Bootstrap</a>
+                                <a href="#">Welcome to App</a>
                                 on August 24, 2019
                             </p>
                         </div>
@@ -59,7 +59,7 @@ const Article = () => {
                                 </h3>
                             </a>
                             <p className="post-meta">Posted by
-                                <a href="#">Start Bootstrap</a>
+                                <a href="#">Welcome to App</a>
                                 on July 8, 2019
                             </p>
                         </div>
