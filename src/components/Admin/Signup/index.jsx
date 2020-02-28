@@ -3,7 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { validateAll } from 'indicative/validator';
-import config from '../../Config';
+import config from '../../../Config';
+import '../../../services/auth'
 
 
 class Signup extends React.Component{
@@ -27,7 +28,7 @@ class Signup extends React.Component{
         });
     }
 
-    handleSubmitChange = (event) => {
+    handleSubmitChange = async(event) => {
         event.preventDefault()
         console.log(this.state)
 
@@ -44,8 +45,9 @@ class Signup extends React.Component{
             required: 'This field is required.',
             'required.email': 'The email is required.',
             'password.confirmed': 'The password confirmation does not match.'
-        }
+        };
 
+             
         validateAll(data, rules, message)
         .then(() => {
             Axios.post(`${config.apiUrl}/api/register`,{                
@@ -56,28 +58,26 @@ class Signup extends React.Component{
             }).then(response => {
                 console.log(response.data)
                 localStorage.setItem('user', JSON.stringify(response.data))
+                this.props.setAuthUser(response.data)
                 this.props.history.push('/');
-            }).catch(errors => {                
+            }).catch(errors=>{
+                console.log(errors)
                 var Jsonemail = JSON.parse(errors.response.data)
-                
+
                 const formattedErrors = {}
-                formattedErrors['name'] = Jsonemail['name'];
                 formattedErrors['email'] = Jsonemail['email'];
-                formattedErrors['password'] = Jsonemail['password'];
                 this.setState({
                     errors: formattedErrors
-                })        
+                })
             })
-        })
-        .catch(errors => { 
-            console.log(errors);
-            //show Errors
+        })  
+        .catch(errors=>{
             const formattedErrors = {}
             errors.forEach(error => formattedErrors[error.field] = error.message)
             this.setState({
                 errors: formattedErrors
-            })
-        })
+            })        
+        })      
     }
 
     render(){
@@ -127,13 +127,7 @@ class Signup extends React.Component{
                                             <button type="submit" className="btn btn-primary btn-user btn-block">
                                                 Register Account
               </button>
-                                            <hr />
-                                            <a href="index.html" className="btn btn-google btn-user btn-block">
-                                                <i className="fab fa-google fa-fw" /> Register with Google
-              </a>
-                                            <a href="index.html" className="btn btn-facebook btn-user btn-block">
-                                                <i className="fab fa-facebook-f fa-fw" /> Register with Facebook
-              </a>
+                                            <hr />                                           
                                         </form>
                                         <hr />
                                         <div className="text-center">

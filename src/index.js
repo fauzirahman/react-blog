@@ -11,6 +11,7 @@ import Login from './components/Admin/Login';
 import Signup from './components/Admin/Signup';
 import ForgotPassword from './components/Admin/ForgotPassword';
 
+
 import * as serviceWorker from './serviceWorker';
 
 class App extends React.Component{
@@ -35,9 +36,16 @@ class App extends React.Component{
             })
         }
     }
+
+    setAuthUser = (authUser) => {
+        this.setState({
+            authUser
+        })
+    }
     
     render(){ 
         const { location } = this.props;
+        console.log(this.state.authUser);
         return(
             <div>    
             {
@@ -48,9 +56,17 @@ class App extends React.Component{
             <Route exact path="/" component={Welcome} />
             <Route path="/about" component={About} />
             <Route path="/contact" component={Contact} />
-            <Route path="/post" component={Post} />               
-            <Route path="/login" component={Login} />  
-            <Route path="/signup" component={Signup} />
+            <Route path="/post/:slug" component={Post} />                           
+            <Route path="/login" render={
+                (props) => <Login {...props} 
+                    
+                    setAuthUser={this.setAuthUser} />
+                } />  
+            <Route path="/signup" render={
+                (props) => <Signup {...props} 
+                    
+                    setAuthUser={this.setAuthUser} />
+                } />
             <Route path="/forgot-password" component={ForgotPassword} />
             {
                 location.pathname !== '/login' && location.pathname !== '/signup' &&
