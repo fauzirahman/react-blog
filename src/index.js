@@ -6,15 +6,20 @@ import Welcome from './components/Welcome';
 import Footer from './components/Footer';
 import About from './components/About';
 import Contact from './components/Contact';
-import Post from './components/Post';
+import Article from './components/Admin/Article';
 import Login from './components/Admin/Login';
 import Signup from './components/Admin/Signup';
 import ForgotPassword from './components/Admin/ForgotPassword';
 
 
 import * as serviceWorker from './serviceWorker';
+import ArticlesService from './services/articles';
+import SingleArticle from './components/SingleArticle';
+
+
 
 class App extends React.Component{
+
 
     constructor(){
         super();
@@ -53,18 +58,32 @@ class App extends React.Component{
                 < Navbar authUser = {this.state.authUser} />
             }    
             
-            <Route exact path="/" component={Welcome} />
+            <Route exact path="/"  render={
+                (props) => <Welcome {...props}  
+                    getArticles={this.props.ArticlesService.getArticles} />
+                } />  
             <Route path="/about" component={About} />
             <Route path="/contact" component={Contact} />
-            <Route path="/post/:slug" component={Post} />                           
+            <Route path="/article/:slug" render={
+                (props) => <SingleArticle 
+                    {...props}
+                    getArticle={this.props.ArticlesService.getArticle}                    
+                    />
+                } />   
+            <Route path="/post" render={
+                (props) => <SingleArticle {...props} />
+                } />                          
+            <Route path="/create-article" render={
+                (props) => <Article {...props}  
+                    getArticleCategories={this.props.ArticlesService.getArticleCategories}                   
+                    setAuthUser={this.setAuthUser} />
+                } />  
             <Route path="/login" render={
-                (props) => <Login {...props} 
-                    
+                (props) => <Login {...props}                     
                     setAuthUser={this.setAuthUser} />
                 } />  
             <Route path="/signup" render={
-                (props) => <Signup {...props} 
-                    
+                (props) => <Signup {...props}                    
                     setAuthUser={this.setAuthUser} />
                 } />
             <Route path="/forgot-password" component={ForgotPassword} />
@@ -74,13 +93,12 @@ class App extends React.Component{
             }                 
         </div> 
         )
-        
     }
 }
 
 const Main = withRouter((props) => {
     return (
-        <App {...props} />
+        <App ArticlesService = {new ArticlesService()} {...props} />
     )
 });
 

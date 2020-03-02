@@ -1,18 +1,55 @@
 import React from 'react';
-import Article from '../Article';
+import Articles from './Articles';
 import Banner from '../Banner';
 
-const Welcome = () => {
-    return (
-        <div>            
-            <Banner 
-                backgroundImage={`url(${process.env.PUBLIC_URL}assets/img/home-bg.jpg)`}
-                title = "New React Blog"
-                subTitle = "Welcome to App"
-            />
-            <Article />
-        </div>        
-    );
-};
+class Welcome extends React.Component {
+    constructor() {
+        super();
+
+
+        this.state = {
+            articles: {
+                data:[]
+            },            
+        };
+
+    }
+
+    async componentWillMount(){
+        const articles = await this.props.getArticles();
+
+        this.setState({
+            articles
+        })
+    }
+
+    
+    handlePagination = async (url) => {
+      console.log(url);
+      const articles = this.props.getArticles(url);
+
+      this.setState({ articles})
+    }
+
+
+    render() {
+        return (
+            <div>
+                <Banner
+                    backgroundImage={`url(${process.env.PUBLIC_URL}assets/img/home-bg.jpg)`}
+                    title="New React Blog"
+                    subTitle="Welcome to App"
+                />
+                <Articles 
+                    articles={this.state.articles.data} 
+                    handlePagination={this.handlePagination}
+                    nextUrl={this.state.articles.next_page_url}
+                    prevUrl={this.state.articles.prev_page_url}                    
+                />
+            </div>
+        );
+    }
+    
+}
 
 export default Welcome;

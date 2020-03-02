@@ -20,10 +20,13 @@ const Navbar = ({authUser}) => {
                         </li>
                         <li className="nav-item">                            
                             <Link className="nav-link" to="/post">Sample Post</Link>
-                        </li>
-                        <li className="nav-item">                            
-                            <Link className="nav-link" to="/contact">Contact</Link>
-                        </li>
+                        </li>                        
+                        {
+                            authUser &&
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/create-article">Create a new Article</Link>
+                            </li>
+                        }
                         {
                             !authUser &&
                             <li className="nav-item">

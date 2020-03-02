@@ -1,10 +1,10 @@
 /* eslint-disable */
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import { validateAll } from 'indicative/validator';
 import config from '../../../Config';
-import '../../../services/auth'
+import PropTypes from 'prop-types';
+import SignupForm from './SignupForm';
 
 
 class Signup extends React.Component{
@@ -22,7 +22,7 @@ class Signup extends React.Component{
 
     }
 
-    handleInputChange = (event) => {
+    handleInputChange = async(event) => {
         this.setState({
             [event.target.name]: event.target.value
         });
@@ -65,9 +65,9 @@ class Signup extends React.Component{
                 var Jsonemail = JSON.parse(errors.response.data)
 
                 const formattedErrors = {}
-                formattedErrors['email'] = Jsonemail['email'];
+                //formattedErrors['email'] = Jsonemail['email'];
                 this.setState({
-                    errors: formattedErrors
+                    errors
                 })
             })
         })  
@@ -82,68 +82,14 @@ class Signup extends React.Component{
 
     render(){
         return (
-            <div>
-                <div className="container">
-                    <div className="card o-hidden border-0 shadow-lg my-5">
-                        <div className="card-body p-0">
-                            {/* Nested Row within Card Body */}
-                            <div className="row">
-                                <div className="col-lg-5 d-none d-lg-block bg-register-image" />
-                                <div className="col-lg-7">
-                                    <div className="p-5">
-                                        <div className="text-center">
-                                            <h1 className="h4 text-gray-900 mb-4">Create an Account!</h1>
-                                        </div>
-                                        <form className="user" onSubmit={this.handleSubmitChange}>
-                                            <div className="form-group">                                                
-                                                <input type="text" name="name" onChange={this.handleInputChange} className="form-control form-control-user" id="username" placeholder="User Name" />                                                                                                
-                                                {
-                                                    this.state.errors['name'] &&
-                                                    <small className="text-danger">{this.state.errors['name']}</small>
-                                                }                                                
-                                            </div>                                            
-                                            <div className="form-group">                                                
-                                                <input type="text" name="email" onChange={this.handleInputChange} className="form-control form-control-user" id="email" placeholder="Email" />                                                                                                
-                                                {
-                                                    this.state.errors['email'] &&
-                                                    <small className="text-danger">{this.state.errors['email']}</small>
-                                                }
-                                                
-                                            </div>                                            
-                                            <div className="form-group row">
-                                                <div className="col-sm-6 mb-3 mb-sm-0">
-                                                    <input type="password" name="password" onChange={this.handleInputChange} className="form-control form-control-user" id="Password" placeholder="Password" />
-                                                    {
-                                                        this.state.errors['password'] &&
-                                                        <small className="text-danger">{this.state.errors['password']}</small>
-                                                    }
-                                                    
-                                                </div>
-                                                <div className="col-sm-6">
-                                                    <input type="password" name="password_confirmation" onChange={this.handleInputChange} className="form-control form-control-user" id="RepeatPassword" placeholder="Repeat Password" />
-                                                    <small className="text-danger">{this.state.errors['password_confirmation']}</small>
-                                                </div>
-                                            </div>
-                                            <button type="submit" className="btn btn-primary btn-user btn-block">
-                                                Register Account
-              </button>
-                                            <hr />                                           
-                                        </form>
-                                        <hr />
-                                        <div className="text-center">
-                                            <Link className="small" to="/forgot-password"> Forgot Password? </Link>
-                                        </div>
-                                        <div className="text-center">
-                                            <Link className="small" to="/login">Already have an account? Login!</Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <SignupForm handleInputChange={this.handleInputChange} handleSubmitChange={this.handleSubmitChange} errors={this.state.errors} />
         );
     }
 }
+
+Signup.propTypes = {
+    handleInputChange: PropTypes.func.isRequired,
+    handleSubmitChange: PropTypes.func.isRequired,
+    errors: PropTypes.func.isRequired
+};
 export default Signup;
