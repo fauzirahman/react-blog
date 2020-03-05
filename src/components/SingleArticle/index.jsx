@@ -8,7 +8,9 @@ class SingleArticle extends React.Component {
 
 
         this.state = {
-            article: null,
+            article: {
+                data:[]
+            },
             loading: true
         };
 

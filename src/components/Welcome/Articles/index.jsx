@@ -9,7 +9,7 @@ const Articles = ({ articles, handlePagination, nextUrl, prevUrl}) => {
             <div className="container">
                 <div className="row">
                     <div className="col-lg-8 col-md-10 mx-auto"> 
-                        {articles.map(article=>(
+                        {articles && articles.map(article=>(
                             <div key={article.id}>
                                 <div className="post-preview">
                                     <Link to={`article/${article.slug}`}>
