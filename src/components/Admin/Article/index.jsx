@@ -30,6 +30,12 @@ class Article extends React.Component {
         })
     }
 
+    handleSubmit = async(event) => {
+        event.preventDefault();
+
+        await this.props.createArticle(this.state, this.props.token); 
+    }
+
     handleInputChange = async (event) => {
         
         this.setState({
@@ -92,7 +98,11 @@ class Article extends React.Component {
 
     render() {
         return (
-            <CreateArticle categories={this.state.categories} handleInputChange={this.handleInputChange} handleSubmitChange={this.handleSubmitChange} errors={this.state.errors}/>
+            <CreateArticle 
+            categories={this.state.categories} 
+            handleInputChange={this.handleInputChange}             
+            handleSubmit={this.handleSubmit}
+            errors={this.state.errors}/>
         );
     }
 }

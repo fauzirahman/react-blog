@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+
 
 const Articles = ({ articles, handlePagination, nextUrl, prevUrl}) => {
     return (
@@ -20,9 +20,8 @@ const Articles = ({ articles, handlePagination, nextUrl, prevUrl}) => {
                                             {`${article.content.substring(0,200)}...`}
                                  </h3>
                                     </Link>
-                                    <p className="post-meta">Posted by
-                                        Fauzi Rahman
-                                        on {new Date(article.created_at).toDateString()}
+                                    <p className="post-meta">Posted by {article.user.name}                                        
+                                        &nbsp;on {new Date(article.created_at).toDateString()}
                                     </p>
                                 </div>
                                 <hr />
@@ -42,4 +41,4 @@ const Articles = ({ articles, handlePagination, nextUrl, prevUrl}) => {
     );
 };
 
-export default Articles;
+export default Articles; 

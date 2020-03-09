@@ -10,11 +10,12 @@ import Article from './components/Admin/Article';
 import Login from './components/Admin/Login';
 import Signup from './components/Admin/Signup';
 import ForgotPassword from './components/Admin/ForgotPassword';
-
+import Auth from './components/Auth';
 
 import * as serviceWorker from './serviceWorker';
 import ArticlesService from './services/articles';
 import SingleArticle from './components/SingleArticle';
+import CreateArticle from './components/Admin/Article/CreateArticle';
 
 
 
@@ -26,7 +27,8 @@ class App extends React.Component{
 
 
         this.state = {
-            authUser: null
+            authUser: null,
+            articles: [],
         }
     }
 
@@ -42,17 +44,40 @@ class App extends React.Component{
         }
     }
 
+    setArticles = (articles)=>{
+        this.setState({articles});
+    }
+
     setAuthUser = (authUser) => {
         this.setState({
-            authUser
+            authUser,
+        },()=>{
+            localStorage.setItem('user', JSON.stringify(authUser));
+            this.props.history.push('/');
         })
     }
     
     render(){ 
         const { location } = this.props;
         console.log(this.state.authUser);
+        console.log(this.props);
         return(
+            
             <div>    
+            < Auth
+                path = "/articles/create"
+                component = {
+                    CreateArticle
+                }
+                props = {
+                    {
+                        getArticleCategories: this.props.ArticlesService.getArticleCategories,
+                        createArticle: this.props.ArticlesService.createArticle,
+                        token: this.state.authUser ? this.state.authUser.access_token : null,
+                    }
+                }
+                isAuthenticated={this.state.authUser !== null}
+            />
             {
                 location.pathname !== '/login' && location.pathname !== '/signup' &&
                 < Navbar authUser = {this.state.authUser} />
@@ -76,7 +101,8 @@ class App extends React.Component{
             <Route path="/create-article" render={
                 (props) => <Article {...props}  
                     getArticleCategories={this.props.ArticlesService.getArticleCategories}                   
-                    setAuthUser={this.setAuthUser} />
+                    createArticle={this.props.ArticlesService.createArticle} 
+                    token={this.state.authUser.access_token} />
                 } />  
             <Route path="/login" render={
                 (props) => <Login {...props}                     

@@ -1,5 +1,5 @@
 import React from 'react';
-import Articles from './Articles';
+import Articles from '../Articles';
 import Banner from '../Banner';
 
 class Welcome extends React.Component {
@@ -9,7 +9,7 @@ class Welcome extends React.Component {
 
         this.state = {
             articles: {
-                data:[]
+                
             },            
         };
 
@@ -17,7 +17,7 @@ class Welcome extends React.Component {
 
     async componentWillMount(){
         const articles = await this.props.getArticles();
-
+        console.log(articles);
         this.setState({
             articles
         })
@@ -26,7 +26,7 @@ class Welcome extends React.Component {
     
     handlePagination = async (url) => {
       console.log(url);
-      const articles = this.props.getArticles(url);
+      const articles = await this.props.getArticles(url);
 
       this.setState({ articles})
     }

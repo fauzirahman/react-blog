@@ -17,10 +17,7 @@ const Navbar = ({authUser}) => {
                         </li>                       
                         <li className="nav-item">                            
                             <Link className="nav-link" to="/about"> About </Link>
-                        </li>
-                        <li className="nav-item">                            
-                            <Link className="nav-link" to="/post">Sample Post</Link>
-                        </li>                        
+                        </li>                                            
                         {
                             authUser &&
                             <li className="nav-item">

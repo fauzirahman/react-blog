@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Banner from '../../../Banner';
 
-const CreateArticle = ({ handleInputChange, categories, handleSubmitChange,errors }) => {    
+const CreateArticle = ({ handleInputChange, categories, handleSubmit, errors }) => {    
     return (
         <div>
                 <Banner
@@ -18,7 +18,7 @@ const CreateArticle = ({ handleInputChange, categories, handleSubmitChange,error
                             {/* Contact Form - Enter your email address on line 19 of the mail/contact_me.php file to make this form work. */}
                             {/* WARNING: Some web hosts do not allow emails to be sent through forms to common mail hosts like Gmail or Yahoo. It's recommended that you use a private domain email address! */}
                             {/* To use the contact form, your site must be on a live web host with PHP! The form will not work locally! */}
-                            <form name="sentMessage" id="contactForm" noValidate  onSubmit={handleSubmitChange}>
+                        <form name="sentMessage" id="contactForm" noValidate onSubmit={handleSubmit}>
                                 <div className="control-group">
                                     <div className="form-group floating-label-form-group controls">
                                         <label>Title</label>
@@ -78,7 +78,7 @@ const CreateArticle = ({ handleInputChange, categories, handleSubmitChange,error
 
 CreateArticle.propTypes = {
     handleInputChange: PropTypes.func.isRequired,
-    handleSubmitChange: PropTypes.func.isRequired,
+    handleSubmit: PropTypes.func.isRequired,
     errors: PropTypes.objectOf(PropTypes.string).isRequired
 };
 
